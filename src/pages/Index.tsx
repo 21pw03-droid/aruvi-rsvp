@@ -24,8 +24,8 @@ const Index = () => {
               <span className="inline-block text-transparent bg-clip-text font-black" style={{ backgroundImage: 'linear-gradient(135deg, hsl(330 70% 65%), hsl(280 60% 62%), hsl(210 70% 68%))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>3</span>
               ! 🌈
             </h1>
-            <p className="text-muted-foreground text-sm mt-1 font-body">
-              Join us for a magical celebration!
+            <p className="text-muted-foreground text-xl mt-1 font-body">
+              Join us for a magical celebration on <br /> <b> 7th march at 5:00pm!</b>
             </p>
           </div>
 

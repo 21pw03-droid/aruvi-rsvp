@@ -23,7 +23,7 @@ export function RSVPForm() {
   const [attending, setAttending] = useState<string>("yes");
   const [adults, setAdults] = useState(1);
   const [kids, setKids] = useState(0);
-  const [isVeg, setIsVeg] = useState(true);
+  const [isVeg, setIsVeg] = useState(false);
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [showSadDialog, setShowSadDialog] = useState(false);
