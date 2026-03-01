@@ -25,7 +25,7 @@ const Index = () => {
               ! 🌈
             </h1>
             <p className="text-muted-foreground text-xl mt-1 font-body">
-              Join us for a magical celebration on <br /> <b> 7th march at 5:00pm!</b>
+              Join us for a magical celebration on <br /> <b> 7th march at 6:00pm!</b>
             </p>
           </div>
 
