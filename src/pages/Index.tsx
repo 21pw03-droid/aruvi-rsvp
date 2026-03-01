@@ -1,10 +1,14 @@
 import { RSVPForm } from "@/components/RSVPForm";
 import { ConfettiBackground } from "@/components/ConfettiBackground";
 import { useNavigate } from "react-router-dom";
-import { Star } from "lucide-react";
+import { Star, MapPin } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
+
+  const openMap = () => {
+    window.open("https://maps.app.goo.gl/vXiLfVAvMaDRYkEa9", "_blank");
+  };
 
   return (
     <div className="h-screen relative overflow-hidden flex flex-col">
@@ -19,14 +23,37 @@ const Index = () => {
               You're Invited!
               <Star className="w-3 h-3" />
             </div>
+
             <h1 className="text-3xl md:text-4xl font-display font-extrabold text-foreground leading-tight">
               🦄 Aruvi turns{" "}
-              <span className="inline-block text-transparent bg-clip-text font-black" style={{ backgroundImage: 'linear-gradient(135deg, hsl(330 70% 65%), hsl(280 60% 62%), hsl(210 70% 68%))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>3</span>
+              <span
+                className="inline-block text-transparent bg-clip-text font-black"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, hsl(330 70% 65%), hsl(280 60% 62%), hsl(210 70% 68%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                3
+              </span>
               ! 🌈
             </h1>
+
             <p className="text-muted-foreground text-xl mt-1 font-body">
-              Join us for a magical celebration on <br /> <b> 7th march at 5:00pm!</b>
+              Join us on <b>7th March at 6:00pm</b>
             </p>
+
+            {/* Venue Section */}
+            <div
+              className="flex items-center justify-center gap-2 mt-2 cursor-pointer text-primary hover:underline"
+              onClick={openMap}
+            >
+              <MapPin className="w-4 h-4" />
+              <span className="text-xl font-semibold">
+                Innovative Oak Garden Party Hall
+              </span>
+            </div>
           </div>
 
           {/* RSVP Card */}
