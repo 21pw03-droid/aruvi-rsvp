@@ -78,7 +78,6 @@ const AdminDashboard = () => {
     fetchRsvps();
   }, [navigate]);
 
-  // ✅ SAFE DATE FORMATTER FOR FIREBASE TIMESTAMP
   const formatDate = (timestamp: any) => {
     if (!timestamp) return "";
     if (timestamp.toDate) {
@@ -87,11 +86,35 @@ const AdminDashboard = () => {
     return new Date(timestamp).toLocaleDateString();
   };
 
+  // Core Calculations
   const attending = rsvps.filter((r) => r.attending);
   const notAttending = rsvps.filter((r) => !r.attending);
+
   const totalAdults = attending.reduce((sum, r) => sum + r.adults, 0);
   const totalKids = attending.reduce((sum, r) => sum + r.kids, 0);
   const totalGuests = totalAdults + totalKids;
+
+  // Veg counts
+  const totalVegAdults = attending
+    .filter((r) => r.dietaryPreference === "veg")
+    .reduce((sum, r) => sum + r.adults, 0);
+
+  const totalVegKids = attending
+    .filter((r) => r.dietaryPreference === "veg")
+    .reduce((sum, r) => sum + r.kids, 0);
+
+  const totalVegGuests = totalVegAdults + totalVegKids;
+
+  // Non-Veg counts
+  const totalNonVegAdults = attending
+    .filter((r) => r.dietaryPreference === "non-veg")
+    .reduce((sum, r) => sum + r.adults, 0);
+
+  const totalNonVegKids = attending
+    .filter((r) => r.dietaryPreference === "non-veg")
+    .reduce((sum, r) => sum + r.kids, 0);
+
+  const totalNonVegGuests = totalNonVegAdults + totalNonVegKids;
 
   const filteredRsvps = useMemo(() => {
     switch (sortBy) {
@@ -135,19 +158,8 @@ const AdminDashboard = () => {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+        {/* Top Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard
-            icon={UserCheck}
-            label="Attending"
-            value={attending.length}
-            color="bg-accent/30 text-accent-foreground"
-          />
-          <StatCard
-            icon={UserX}
-            label="Not Attending"
-            value={notAttending.length}
-            color="bg-destructive/10 text-destructive"
-          />
           <StatCard
             icon={Users}
             label="Total Adults"
@@ -160,20 +172,60 @@ const AdminDashboard = () => {
             value={totalKids}
             color="bg-secondary/30 text-secondary-foreground"
           />
+          <StatCard
+            icon={UserCheck}
+            label="Responded as Attending"
+            value={attending.length}
+            color="bg-accent/30 text-accent-foreground"
+          />
+          <StatCard
+            icon={UserX}
+            label="Responded as Not Attending"
+            value={notAttending.length}
+            color="bg-destructive/10 text-destructive"
+          />
         </div>
 
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
-          <p className="text-lg font-display font-bold text-card-foreground mb-1">
-            🎈 Total Expected Guests
-          </p>
-          <p className="text-4xl font-display font-extrabold text-primary">
-            {totalGuests}
-          </p>
-          <p className="text-muted-foreground text-sm mt-1">
-            {totalAdults} adults + {totalKids} kids
-          </p>
+
+        {/* Guest Summary Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          {/* Total */}
+          <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+            <p className="text-sm text-muted-foreground">🎈 Total Guests</p>
+            <p className="text-3xl font-bold text-primary mt-1">
+              {totalGuests}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {totalAdults} adults + {totalKids} kids
+            </p>
+          </div>
+
+          {/* Non-Veg */}
+          <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+            <p className="text-sm text-muted-foreground">🍗 Non-Veg Guests</p>
+            <p className="text-3xl font-bold text-destructive mt-1">
+              {totalNonVegGuests}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {totalNonVegAdults} adults + {totalNonVegKids} kids
+            </p>
+          </div>
+
+          {/* Veg */}
+          <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+            <p className="text-sm text-muted-foreground">🥬 Veg Guests</p>
+            <p className="text-3xl font-bold text-accent-foreground mt-1">
+              {totalVegGuests}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {totalVegAdults} adults + {totalVegKids} kids
+            </p>
+          </div>
+
         </div>
 
+        {/* Responses Section */}
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-display font-bold text-foreground">
